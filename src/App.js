@@ -4,9 +4,12 @@ import Collapsible from 'react-collapsible';
 import { Scrollbars } from 'react-custom-scrollbars-2';
 
 import { FaSchool, FaBriefcase, FaBrain, FaCode, FaTrophy, FaChevronUp, FaChevronDown, FaLinkedin, FaGithub, FaEnvelope, FaPhoneSquare } from "react-icons/fa";
-import { useState } from 'react';
-import MyImage from "./assets/images/me.JPG"
-function Icon ({name}){
+import { useEffect, useRef, useState } from 'react';
+import Terminal, { ColorMode, TerminalOutput } from 'react-terminal-ui';
+import Typed from 'react-typed';
+
+import MyImage from "./assets/images/me.jpg"
+const Icon = ({name}) => {
   const SIZE=22;
   if(name == "school") return <FaSchool size={SIZE} />
   if(name == "work") return <FaBriefcase size={SIZE} />
@@ -18,7 +21,7 @@ function Icon ({name}){
 
 }
 
-function HeaderText({icon, text}) {
+const HeaderText = ({icon, text}) => {
   return (
     <div className='flex flex-row items-center text-left pl-4'>
       <Icon name={icon} />
@@ -27,7 +30,7 @@ function HeaderText({icon, text}) {
   )
 }
 
-function SubHeaderText({isOpened, text}) {
+const SubHeaderText = ({isOpened, text}) => {
 
   return (
     <div className='flex flex-row items-center text-left pl-4'>
@@ -37,7 +40,7 @@ function SubHeaderText({isOpened, text}) {
   )
 }
 
-function CustomCollabsible({children, title}) {
+const CustomCollabsible = ({children, title}) => {
   const [isOpened, setIsOpened] = useState(false)
   return (
     <Collapsible
@@ -50,15 +53,40 @@ function CustomCollabsible({children, title}) {
   )
 }
 
+const App = () => {
+  const scrollBarRef = useRef(null)
+  const [terminalLineData, setTerminalLineData] = useState([
+    "Hello There 😄!",
+    "^500Welcome to my personal website",
+    "^1000This is <b class='bg-white text-black'>Ahmed Sharafeldin</b>."
+  ]);
 
-function App() {
+  useEffect(() => {
+    // scrollBarRef.current.scrollToBottom()
+  }, [terminalLineData])
+
+
+  const onInput = (input) => {
+    if(input == "clear"){
+      setTerminalLineData([])
+      return
+    }
+    let output = "";
+    switch(input){
+      case "-h": output = "ed => education\nap => acedemic projects"; break;
+      default: output = "Invalid Command"; break;        
+    }
+    setTerminalLineData([...terminalLineData, output])
+  }
+
+ 
   return (
     <div className="App">
       <div className="flex h-screen">
         <div className="w-1/4 p-4 sticky top-0 bg-black">
-          <div className=" relative w-60 h-auto">
-            <img src={MyImage} className="w-full h-auto" />
-            <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t h-12 from-black to-transparent"></div>
+          <div className="relative w-48 h-auto mx-auto">
+            <img src={MyImage} className="w-full h-auto mx-auto" />
+            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t h-12 from-black to-transparent"></div>
           </div>
           <div>
             <div className='font-rubik font-black text-[24px] mt-8 text-white'>Ahmed Sharafeldin</div>
@@ -67,156 +95,47 @@ function App() {
           </div>
           <div className='flex flex-row justify-center gap-4 mt-8'>
             <a href='https://www.linkedin.com/in/ahmed-sharafeldin98/'>
-              <FaLinkedin size={24}  color='white'/>
+              <FaLinkedin className="w-6 h-6 hover:w-7 hover:h-7" color='white'/>
             </a>
             <a href='https://github.com/AhmedSharaf98'>
-              <FaGithub size={24} color='white'/>
+              <FaGithub className="w-6 h-6 hover:w-7 hover:h-7" color='white'/>
             </a>
             <a href='mailto:ahmedsharaf@aucegypt.edu'>
-              <FaEnvelope size={24} color='white'/>
+              <FaEnvelope className="w-6 h-6 hover:w-7 hover:h-7" color='white'/>
             </a>
             <a href='tel:+201024082232'>
-              <FaPhoneSquare size={24} color='white'/>
+              <FaPhoneSquare className="w-6 h-6 hover:w-7 hover:h-7" color='white'/>
             </a>
           </div>
         </div>
-        <Scrollbars className="w-3/4 p-4 bg-red-50">
-          <HeaderText icon="school" text="Education" />
-          <CustomCollabsible title="The American University in Cairo">
-            <p className='font-rubik font-bold'>
-              This is the collapsible content. It can be any element or React
-              component you like.
-            </p>
-            <p>
-              It can even be another Collapsible component. Check out the next
-              section!
-            </p>
-            <p className='font-rubik font-bold'>
-              This is the collapsible content. It can be any element or React
-              component you like.
-            </p>
-            <p>
-              It can even be another Collapsible component. Check out the next
-              section!
-            </p>
-            <p className='font-rubik font-bold'>
-              This is the collapsible content. It can be any element or React
-              component you like.
-            </p>
-            <p>
-              It can even be another Collapsible component. Check out the next
-              section!
-            </p>
-            <p className='font-rubik font-bold'>
-              This is the collapsible content. It can be any element or React
-              component you like.
-            </p>
-            <p>
-              It can even be another Collapsible component. Check out the next
-              section!
-            </p>
-            <p className='font-rubik font-bold'>
-              This is the collapsible content. It can be any element or React
-              component you like.
-            </p>
-            <p>
-              It can even be another Collapsible component. Check out the next
-              section!
-            </p>
-            <p className='font-rubik font-bold'>
-              This is the collapsible content. It can be any element or React
-              component you like.
-            </p>
-            <p>
-              It can even be another Collapsible component. Check out the next
-              section!
-            </p>
-            <p className='font-rubik font-bold'>
-              This is the collapsible content. It can be any element or React
-              component you like.
-            </p>
-            <p>
-              It can even be another Collapsible component. Check out the next
-              section!
-            </p>
-            <p className='font-rubik font-bold'>
-              This is the collapsible content. It can be any element or React
-              component you like.
-            </p>
-            <p>
-              It can even be another Collapsible component. Check out the next
-              section!
-            </p>
-            <p className='font-rubik font-bold'>
-              This is the collapsible content. It can be any element or React
-              component you like.
-            </p>
-            <p>
-              It can even be another Collapsible component. Check out the next
-              section!
-            </p>
-            <p className='font-rubik font-bold'>
-              This is the collapsible content. It can be any element or React
-              component you like.
-            </p>
-            <p>
-              It can even be another Collapsible component. Check out the next
-              section!
-            </p>
-            <p className='font-rubik font-bold'>
-              This is the collapsible content. It can be any element or React
-              component you like.
-            </p>
-            <p>
-              It can even be another Collapsible component. Check out the next
-              section!
-            </p>
-            <p className='font-rubik font-bold'>
-              This is the collapsible content. It can be any element or React
-              component you like.
-            </p>
-            <p>
-              It can even be another Collapsible component. Check out the next
-              section!
-            </p>
-            <p className='font-rubik font-bold'>
-              This is the collapsible content. It can be any element or React
-              component you like.
-            </p>
-            <p>
-              It can even be another Collapsible component. Check out the next
-              section!
-            </p>
-            <p className='font-rubik font-bold'>
-              This is the collapsible content. It can be any element or React
-              component you like.
-            </p>
-            <p>
-              It can even be another Collapsible component. Check out the next
-              section!
-            </p>
-            <p className='font-rubik font-bold'>
-              This is the collapsible content. It can be any element or React
-              component you like.
-            </p>
-            <p>
-              It can even be another Collapsible component. Check out the next
-              section!
-            </p>
-            <p className='font-rubik font-bold'>
-              This is the collapsible content. It can be any element or React
-              component you like.
-            </p>
-            <p>
-              It can even be another Collapsible component. Check out the next
-              section!
-            </p>
-          </CustomCollabsible>
-          <HeaderText icon="work" text="Work Experience" />
-          <HeaderText icon="academic" text="Academic Projects" />
-          <HeaderText icon="personal" text="Personal Projects" />
-          <HeaderText icon="achievements" text="Achievements" />
-        </Scrollbars>
+        <div className='flex flex-1 bg-black p-12 pl-0'>
+         <div className="flex flex-1 text-start">
+         {/* <Scrollbars className="h-16" ref={(ref) => scrollBarRef.current = ref }> */}
+            <Terminal name='Ahmed Sharafeldin Personal Website' colorMode={ ColorMode.Dark } onInput={onInput}>
+              {/* <div className='h-full'>
+                  <div> */}
+                    {terminalLineData.map((el, ind) => {
+                      console.log(el)
+                      return (
+                        <TerminalOutput key={ind}>
+                          <Typed
+                            startDelay={500}
+                            strings={[el]}
+                            typeSpeed={20}
+                            showCursor={false}
+                          >
+                            <span className='break-words' />
+                          </Typed>
+                        </TerminalOutput>
+                      )} 
+                    )}
+                  {/* </div>
+              </div> */}
+            </Terminal>
+            {/* </Scrollbars> */}
+
+          </div>
+        </div>
       </div>  
     </div>
   );
